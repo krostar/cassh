@@ -6,9 +6,10 @@ import (
 	"os"
 	"time"
 
+	"golang.org/x/crypto/ssh"
+
 	"github.com/krostar/cassh"
 	"github.com/krostar/sshx"
-	"golang.org/x/crypto/ssh"
 )
 
 func SignUserKeyOnlyIfNeeded(ctx context.Context) error {
@@ -19,7 +20,7 @@ func SignUserKeyOnlyIfNeeded(ctx context.Context) error {
 	}
 
 	// is the server reachable ?
-	if err := client.Ping(ctx); err != nil {
+	if err = client.Ping(ctx); err != nil {
 		return fmt.Errorf("unable to ping cassh server: %v", err)
 	}
 
@@ -51,7 +52,7 @@ func SignUserKeyOnlyIfNeeded(ctx context.Context) error {
 	}
 
 	// write the signed certificate
-	if err := os.WriteFile("~/.ssh/id_rsa-cert.pub", ssh.MarshalAuthorizedKey(userSignedCertificate), 0644); err != nil {
+	if err := os.WriteFile("~/.ssh/id_rsa-cert.pub", ssh.MarshalAuthorizedKey(userSignedCertificate), 0o600); err != nil {
 		return fmt.Errorf("unable to write signed certificate: %v", err)
 	}
 

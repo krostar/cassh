@@ -11,18 +11,20 @@ type apiHealthResponse struct {
 }
 
 type apiUserStatusResponse struct {
-	Expiration string   `json:"expiration"`
-	Expiry     string   `json:"expiry"`
-	Principals []string `json:"principals"`
-	RealName   string   `json:"realname"`
-	SSHKeyHash struct {
-		AuthType string `json:"auth_type"`
-		Bits     int    `json:"bits"`
-		Hash     string `json:"hash"`
-		Rate     string `json:"rate"`
-	} `json:"ssh_key_hash"`
-	Status   string `json:"status"`
-	Username string `json:"username"`
+	Expiration string                          `json:"expiration"`
+	Expiry     string                          `json:"expiry"`
+	Principals []string                        `json:"principals"`
+	RealName   string                          `json:"realname"`
+	SSHKeyHash apiUserStatusResponseSSHKeyHash `json:"ssh_key_hash"`
+	Status     string                          `json:"status"`
+	Username   string                          `json:"username"`
+}
+
+type apiUserStatusResponseSSHKeyHash struct {
+	AuthType string `json:"auth_type"`
+	Bits     int    `json:"bits"`
+	Hash     string `json:"hash"`
+	Rate     string `json:"rate"`
 }
 
 func dtoUserStatusResponse(response apiUserStatusResponse, timeZone *time.Location) (*UserStatus, error) {

@@ -55,12 +55,7 @@ func Test_SessionUser_Status(t *testing.T) {
 					Expiry:     "+6h",
 					Principals: []string{"foo", "bar", "foobar"},
 					RealName:   "foo.bar@foo.b-ar",
-					SSHKeyHash: struct {
-						AuthType string `json:"auth_type"`
-						Bits     int    `json:"bits"`
-						Hash     string `json:"hash"`
-						Rate     string `json:"rate"`
-					}{
+					SSHKeyHash: apiUserStatusResponseSSHKeyHash{
 						AuthType: "RSA",
 						Bits:     8192,
 						Hash:     "SHA512:3423jhb",
